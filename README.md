@@ -1,3 +1,5 @@
-# fullstack
+# Fullstack
 
-Directori que conté projectes fullstack
+Repositori en elaboració... ⚠️
+
+
