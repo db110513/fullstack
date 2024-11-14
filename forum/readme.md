@@ -1,6 +1,6 @@
 # Fòrum
 
-App fullstack codificada amb Flutter i Express Node.js
+App codificada amb Flutter i Express Node.js
 
 Codi compilat:
 
