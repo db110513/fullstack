@@ -1,4 +1,4 @@
-# xat
+# Xat
 
 Codi compilat:
 
