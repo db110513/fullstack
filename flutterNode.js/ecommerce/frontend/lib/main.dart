@@ -13,6 +13,7 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Inici(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

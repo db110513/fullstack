@@ -4,26 +4,30 @@ import 'dart:convert';
 
 class Registre extends StatelessWidget {
 
+  var resposta;
   final TextEditingController nomController = TextEditingController();
-  final TextEditingController correuController = TextEditingController();
   final TextEditingController contrassenyaController = TextEditingController();
-
 
   void registrar(BuildContext context) async {
 
     var url = Uri.parse('http://10.0.2.2:5000/api/usuari/registre');
+
+    var dades = {
+      'nom': nomController.text,
+      'contrassenya': contrassenyaController.text,
+    };
+
+    print('Enviant dades de registre: $dades');
+
     var resposta = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'nom': nomController.text,
-        'correu': correuController.text,
-        'contrassenya': contrassenyaController.text,
-      }),
+      body: json.encode(dades),
     );
 
+    print('Dades a enviar al servidor: ${resposta.body}');
+
     if (resposta.statusCode == 201) {
-      // Navegar a la pantalla d'inici de sessió després del registre
       Navigator.pop(context);
     }
     else {
@@ -38,9 +42,7 @@ class Registre extends StatelessWidget {
     }
   }
 
-
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -50,7 +52,7 @@ class Registre extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             TextField(
               controller: nomController,
               decoration: InputDecoration(
