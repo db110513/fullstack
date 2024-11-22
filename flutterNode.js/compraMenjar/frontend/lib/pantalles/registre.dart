@@ -1,49 +1,58 @@
 import 'package:flutter/material.dart';
+import 'login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+
 class Registre extends StatefulWidget {
+
   _RegistreState createState() => _RegistreState();
 }
 
 class _RegistreState extends State<Registre> {
 
   final TextEditingController _usuariController = TextEditingController();
-  final TextEditingController _contrassenyaController = TextEditingController();
+  final TextEditingController _contrasenyaController = TextEditingController();
+
 
   void registre() async {
-
     final usuari = _usuariController.text;
-    final contrassenya = _contrassenyaController.text;
+    final contrassenya = _contrasenyaController.text;
 
     if (usuari.isNotEmpty && contrassenya.isNotEmpty) {
+      print('Dades a enviar al backend: $usuari - $contrassenya');
 
       final response = await http.post(
-        Uri.parse('http://localhost:3000/api/usuaris/registre'),
+        Uri.parse('http://10.0.2.2:3000/usuaris/registre'),
         headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'usuari': usuari,
-          'contrasenya': contrassenya,
+        body: jsonEncode({
+          'nomUsuari': usuari,
+          'contrassenya': contrassenya,
         }),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Registre exitós')),
         );
-      }
-      else {
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Login()),
+        );
+      } else {
+        print(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error en el registre')),
+          SnackBar(content: Text('Error en el registre:')),
         );
       }
-    }
-    else {
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Omple tots els camps')),
+        SnackBar(content: Text('Si us plau, omple tots els camps')),
       );
     }
   }
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +66,7 @@ class _RegistreState extends State<Registre> {
               TextField(
                 controller: _usuariController,
                 decoration: InputDecoration(
-                  labelText: 'Usuari',
+                  labelText: 'Nom d\'usuari',
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue, width: 2),
                     borderRadius: BorderRadius.circular(8),
@@ -66,7 +75,7 @@ class _RegistreState extends State<Registre> {
               ),
               SizedBox(height: 10),
               TextField(
-                controller: _contrassenyaController,
+                controller: _contrasenyaController,
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Contrassenya',
@@ -79,7 +88,7 @@ class _RegistreState extends State<Registre> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: registre,
-                child: Text('Registra\'t'),
+                child: Text('Crear Compte'),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
                   shape: RoundedRectangleBorder(

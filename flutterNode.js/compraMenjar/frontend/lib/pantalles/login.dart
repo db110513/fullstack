@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'registre.dart'; // Assegura't que has importat la pantalla Registre
+import 'registre.dart';
+import 'dart:convert';
+
 
 class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
@@ -10,6 +12,7 @@ class _LoginState extends State<Login> {
   final TextEditingController _contrasenyaController = TextEditingController();
 
   void login() async {
+
     final usuari = _usuariController.text;
     final contrasenya = _contrasenyaController.text;
 
