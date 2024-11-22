@@ -18,8 +18,13 @@ mongoose.connect('mongodb://localhost:27017/compra-menjar')
   .then(() => console.log('Connexió a la base de dades correcta'))
   .catch(error => console.error('Error en connectar', error));
 
-app.use('/api/usuaris', usuarisRoutes);
-app.use('/api/menjar', menjarRoutes);
-app.use('/api/comandes', comandaRoutes);
+app.use('/usuaris', usuarisRoutes);
+app.use('/menjar', menjarRoutes);
+app.use('/comandes', comandaRoutes);
 
 app.listen(PORT, () => console.log(`Servidor actiu al port ${PORT}`));
+
+app.get('/', (req, res) => {
+  res.send('Servidor actiu!');
+});
+

@@ -2,22 +2,21 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const UsuariSchema = new mongoose.Schema({
-  nom: { type: String, required: true },
-  correu: { type: String, required: true, unique: true },
-  contrasenya: { type: String, required: true }
+  nomUsuari: { type: String, required: true, unique: true },
+  contrassenya: { type: String, required: true }
 });
 
 
 UsuariSchema.pre('save', async function (next) {
-  if (this.isModified('contrasenya')) {
-    this.contrasenya = await bcrypt.hash(this.contrasenya, 10);
+  if (this.isModified('contrassenya')) {
+    this.contrasenya = await bcrypt.hash(this.contrassenya, 10);
   }
   next();
 });
 
 
-UsuariSchema.methods.verificarContrasenya = async function (contrasenya) {
-  return await bcrypt.compare(contrasenya, this.contrasenya);
+UsuariSchema.methods.verificarContrasenya = async function (contrassenya) {
+  return await bcrypt.compare(contrassenya, this.contrassenya);
 };
 
 module.exports = mongoose.model('Usuari', UsuariSchema);
