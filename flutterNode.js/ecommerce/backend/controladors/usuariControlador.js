@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 exports.registrarUsuari = async (req, res) => {
   try {
-    console.log('Dades rebudes per al registre:', req.body);
+    console.log('Dades rebudes per al pussy:', req.body);
 
     const { nom, contrassenya } = req.body;
 
@@ -20,11 +20,13 @@ exports.registrarUsuari = async (req, res) => {
 
 exports.iniciarSessio = async (req, res) => {
   try {
+    console.log('Dades rebudes:', req.body);
+
     const { nom, contrassenya } = req.body;
 
     const usuari = await Usuari.findOne({ nom });
     if (!usuari) {
-      return res.status(400).json({ error: 'Nom o contrassenya incorrecta' });
+      return res.status(400).json({ error: 'Nom incorrecte' });
     }
 
     const esCorrecte = await bcrypt.compare(contrassenya, usuari.contrassenya);
