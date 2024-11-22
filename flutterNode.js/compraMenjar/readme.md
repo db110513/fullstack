@@ -1,0 +1,2 @@
+Codi compilat:
+
