@@ -16,6 +16,7 @@ router.post('/registre', async (req, res) => {
     }
 
     const usuariExisteix = await Usuari.findOne({ nomUsuari });
+
     if (usuariExisteix) {
       return res.status(400).send({ error: 'Aquest usuari ja està registrat' });
     }
@@ -30,7 +31,9 @@ router.post('/registre', async (req, res) => {
     await nouUsuari.save();
 
     res.status(201).send({ success: true, message: 'Usuari registrat correctament' });
-  } catch (error) {
+    
+  } 
+  catch (error) {
     res.status(500).send({ error: 'Error del servidor', details: error.message });
   }
 });
