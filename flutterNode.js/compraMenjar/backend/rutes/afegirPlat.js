@@ -1,7 +1,8 @@
 const express = require('express');
+const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const Menjar = require('./models/menjar');  
+const Menjar = require('../models/menjar');  
 const app = express();
 
 const storage = multer.diskStorage({
@@ -30,3 +31,5 @@ app.post('/plats', upload.single('imatge'), async (req, res) => {
     res.status(400).send('Error en afegir el plat: ' + error.message);
   }
 });
+
+module.exports = router;

@@ -9,47 +9,45 @@ const SECRET_KEY = process.env.SECRET_KEY || 'compra-menjar';
 router.post('/registre', async (req, res) => {
   try {
     const { nomUsuari, contrassenya } = req.body;
-    console.log('Dades rebudes del frontend:', req.body);    
-
     if (!nomUsuari || !contrassenya) {
       return res.status(400).send({ error: 'Tots els camps són obligatoris' });
     }
 
     const usuariExisteix = await Usuari.findOne({ nomUsuari });
-
     if (usuariExisteix) {
-      return res.status(400).send({ error: 'Aquest usuari ja està registrat' });
+      return res.status(409).send({ error: 'Aquest usuari ja està registrat' });
     }
 
     const contrassenyaEncriptada = await bcrypt.hash(contrassenya, 10);
-
     const nouUsuari = new Usuari({
       nomUsuari,
       contrassenya: contrassenyaEncriptada,
     });
 
     await nouUsuari.save();
-
     res.status(201).send({ success: true, message: 'Usuari registrat correctament' });
-    
   } 
+  
   catch (error) {
-    res.status(500).send({ error: 'Error del servidor', details: error.message });
+    res.status(400).json({ error: 'Missatge d\'error' });
   }
-});
 
+});
 
 router.post('/login', async (req, res) => {
   try {
     const { nomUsuari, contrassenya } = req.body;
-
     if (!nomUsuari || !contrassenya) {
       return res.status(400).send({ error: 'Tots els camps són obligatoris' });
     }
 
     const usuari = await Usuari.findOne({ nomUsuari });
+    if (!usuari) {
+      return res.status(400).send({ error: 'Nom d\'usuari o contrassenya incorrectes' });
+    }
 
-    if (!usuari || !(await usuari.verificarContrasenya(contrassenya))) {
+    const contrasenyaValida = await bcrypt.compare(contrassenya, usuari.contrasenya);
+    if (!contrasenyaValida) {
       return res.status(400).send({ error: 'Nom d\'usuari o contrassenya incorrectes' });
     }
 
@@ -60,5 +58,6 @@ router.post('/login', async (req, res) => {
     res.status(500).send({ error: 'Error del servidor', details: error.message });
   }
 });
+
 
 module.exports = router;

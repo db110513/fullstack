@@ -1,11 +1,14 @@
 const express = require('express');
+
 const app = express();
+app.use(express.json());
 
 const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-// Importa les rutes
 const menjarRoutes = require('./rutes/menjar');
 const comandaRoutes = require('./rutes/comandes');
 const usuarisRoutes = require('./rutes/usuaris');

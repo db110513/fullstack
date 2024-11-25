@@ -8,12 +8,13 @@ router.get('/', async (req, res) => {
   res.send(comandes);
 });
 
-router.post('/', async (req, res) => {
+router.post('/crea', async (req, res) => {
   try {
     const novaComanda = new Comanda(req.body);
     await novaComanda.save();
     res.status(201).send(novaComanda);
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(400).send(error);
   }
 });
