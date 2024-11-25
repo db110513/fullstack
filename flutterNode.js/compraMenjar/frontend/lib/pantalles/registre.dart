@@ -4,17 +4,15 @@ import 'dart:convert';
 import 'login.dart';
 
 class Registre extends StatefulWidget {
-
   _RegistreState createState() => _RegistreState();
 }
 
 class _RegistreState extends State<Registre> {
 
-  final url = Uri.parse('http://10.0.2.2:5000/registre');
+  final url = Uri.parse('http://10.0.2.2:3000/usuaris/registre');
 
   final TextEditingController _nomUsuariController = TextEditingController();
   final TextEditingController _contrassenyaController = TextEditingController();
-
 
   Future<void> registre() async {
 
@@ -27,7 +25,19 @@ class _RegistreState extends State<Registre> {
       }),
     );
 
+    print("Resposta: ${response.body}");
+
     if (response.statusCode == 201) {
+      print("Usuari enviat: ${_nomUsuariController.text}");
+      print("Contrassenya enviada: ${_contrassenyaController.text}");
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Usuari Creat'),
+            duration: Duration(seconds: 3),
+          ),
+      );
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Login()),
@@ -57,28 +67,37 @@ class _RegistreState extends State<Registre> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _nomUsuariController,
-                decoration: InputDecoration(labelText: 'Nom d\'usuari'),
+                decoration: InputDecoration(
+                  labelText: 'Usuari',
+                  labelStyle: TextStyle(color: Colors.black, fontSize: 18),
+                ),
               ),
               SizedBox(height: 18),
               TextField(
                 controller: _contrassenyaController,
                 obscureText: true,
-                decoration: InputDecoration(labelText: 'Contrassenya'),
+                decoration: InputDecoration(
+                  labelText: 'Contrassenya',
+                  labelStyle: TextStyle(color: Colors.black, fontSize: 18),
+                ),
               ),
               SizedBox(height: 24),
               ElevatedButton(
-                onPressed: registre,
+                onPressed: (){
+                  registre();
+                },
                 child: Text('Registrar', style: TextStyle(fontSize: 21)),
               ),
               SizedBox(height: 16),
               TextButton(
                 onPressed: () {
+                  registre();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => Login()),

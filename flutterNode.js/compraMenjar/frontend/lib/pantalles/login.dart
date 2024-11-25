@@ -14,7 +14,7 @@ class _LoginState extends State<Login> {
   final url = Uri.parse('http://10.0.2.2:5000/login');
 
   final TextEditingController _nomUsuariController = TextEditingController();
-  final TextEditingController _contrasenyaController = TextEditingController();
+  final TextEditingController _contrassenyaController = TextEditingController();
 
   Future<void> login() async {
     final response = await http.post(
@@ -24,7 +24,7 @@ class _LoginState extends State<Login> {
       },
       body: jsonEncode({
         'nomUsuari': _nomUsuariController.text,
-        'contrassenya': _contrasenyaController.text,
+        'contrassenya': _contrassenyaController.text,
       }),
     );
 
@@ -72,13 +72,19 @@ class _LoginState extends State<Login> {
             children: [
               TextField(
                 controller: _nomUsuariController,
-                decoration: InputDecoration(labelText: 'Nom d\'usuari'),
+                decoration: InputDecoration(
+                  labelText: 'Usuari',
+                  labelStyle: TextStyle(color: Colors.black, fontSize: 18),
+                ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 18),
               TextField(
-                controller: _contrasenyaController,
+                controller: _contrassenyaController,
                 obscureText: true,
-                decoration: InputDecoration(labelText: 'Contrassenya'),
+                decoration: InputDecoration(
+                  labelText: 'Contrassenya',
+                  labelStyle: TextStyle(color: Colors.black, fontSize: 18),
+                ),
               ),
               SizedBox(height: 24),
               ElevatedButton(
