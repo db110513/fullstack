@@ -9,6 +9,9 @@ const SECRET_KEY = process.env.SECRET_KEY || 'compra-menjar';
 router.post('/registre', async (req, res) => {
   try {
     const { nomUsuari, contrassenya } = req.body;
+
+    console.log('Dades rebudes pel registre:', { nomUsuari, contrassenya });
+
     if (!nomUsuari || !contrassenya) {
       return res.status(400).send({ error: 'Tots els camps són obligatoris' });
     }
@@ -36,7 +39,11 @@ router.post('/registre', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   try {
+
     const { nomUsuari, contrassenya } = req.body;
+
+    console.log('Dades rebudes pel login:', { nomUsuari, contrassenya });
+
     if (!nomUsuari || !contrassenya) {
       return res.status(400).send({ error: 'Tots els camps són obligatoris' });
     }
@@ -46,7 +53,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).send({ error: 'Nom d\'usuari o contrassenya incorrectes' });
     }
 
-    const contrasenyaValida = await bcrypt.compare(contrassenya, usuari.contrasenya);
+    const contrasenyaValida = await bcrypt.compare(contrassenya, usuari.contrassenya);
     if (!contrasenyaValida) {
       return res.status(400).send({ error: 'Nom d\'usuari o contrassenya incorrectes' });
     }
