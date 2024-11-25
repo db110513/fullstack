@@ -11,7 +11,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-  final url = Uri.parse('http://10.0.2.2:5000/login');
+  final url = Uri.parse('http://10.0.2.2:3000/usuaris/login');
 
   final TextEditingController _nomUsuariController = TextEditingController();
   final TextEditingController _contrassenyaController = TextEditingController();
