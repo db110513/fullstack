@@ -14,11 +14,12 @@ router.post('/registre', async (req, res) => {
 
     if (!nomUsuari || !contrassenya) {
       return res.status(400).send({ error: 'Tots els camps són obligatoris' });
+
     }
 
     const usuariExisteix = await Usuari.findOne({ nomUsuari });
     if (usuariExisteix) {
-      return res.status(409).send({ error: 'Aquest usuari ja està registrat' });
+      return res.status(409).send({ error: 'Usuari registrat' });
     }
 
     const contrassenyaEncriptada = await bcrypt.hash(contrassenya, 10);
