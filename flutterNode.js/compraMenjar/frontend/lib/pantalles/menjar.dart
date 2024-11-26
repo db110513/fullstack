@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'confirmar.dart'; // Importa Confirmar per la navegació
+import 'confirmar.dart';
 
 class Menjar extends StatefulWidget {
   final String token;
 
   Menjar({required this.token});
 
-  @override
   _MenjarState createState() => _MenjarState();
 }
 
@@ -33,7 +32,6 @@ class _MenjarState extends State<Menjar> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Menú'),
-        backgroundColor: Colors.green,
       ),
       body: ListView.builder(
         itemCount: plats.length,
@@ -43,9 +41,36 @@ class _MenjarState extends State<Menjar> {
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             child: ListTile(
               contentPadding: EdgeInsets.all(10),
-              leading: Image.network(plat['imatge'], width: 50, height: 50, fit: BoxFit.cover),
+              leading: SizedBox(
+                width: 80,
+                height: 80,
+                child: Image.network(
+                  plat['imatge'],
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[300],
+                      child: Icon(
+                        Icons.restaurant,
+                        size: 40,
+                        color: Colors.grey[600],
+                      ),
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
+                ),
+              ),
               title: Text(plat['nom']),
-              subtitle: Text('${plat['preu']} €'),
+              subtitle: Text('${plat['preu'].toStringAsFixed(2)} €'),
               trailing: IconButton(
                 icon: Icon(Icons.shopping_cart),
                 onPressed: () {
@@ -69,7 +94,7 @@ class _MenjarState extends State<Menjar> {
                     ),
                   );
                 },
-          child: Text('Compra'),
+          child: Text('Compra (${total.toStringAsFixed(2)} €)'),
         ),
       ),
     );
