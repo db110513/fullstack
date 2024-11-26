@@ -15,53 +15,51 @@ class _RegistreState extends State<Registre> {
   final TextEditingController _contrassenyaController = TextEditingController();
 
   Future<void> registre() async {
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({
+      'nomUsuari': _nomUsuariController.text,
+      'contrassenya': _contrassenyaController.text,
+    }),
+  );
 
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'nomUsuari': _nomUsuariController.text,
-        'contrassenya': _contrassenyaController.text,
-      }),
+  if (response.statusCode == 201) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Usuari Creat'),
+        duration: Duration(seconds: 3),
+      ),
     );
-
-    print("Resposta: ${response.body}");
-
-    if (response.statusCode == 201) {
-      print("Usuari enviat: ${_nomUsuariController.text}");
-      print("Contrassenya enviada: ${_contrassenyaController.text}");
-
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Usuari Creat'),
-            duration: Duration(seconds: 3),
-          ),
-      );
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Login()),
-      );
-    }
-    else {
-      final error = jsonDecode(response.body)['error'];
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text(error),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text('D\'acord'),
-              ),
-            ],
-          );
-        },
-      );
-    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Login()),
+    );
   }
+  else {
+    // imprimeixo per pantalla el missatge de l'API
+    final error = jsonDecode(response.body)['error'];
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(error),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _nomUsuariController.clear();
+                _contrassenyaController.clear();
+              },
+              child: const Text('D\'acord'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +76,7 @@ class _RegistreState extends State<Registre> {
                   labelStyle: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
-              SizedBox(height: 18),
+              const SizedBox(height: 18),
               TextField(
                 controller: _contrassenyaController,
                 obscureText: true,
@@ -87,23 +85,20 @@ class _RegistreState extends State<Registre> {
                   labelStyle: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: (){
-                  registre();
-                },
-                child: Text('Registrar', style: TextStyle(fontSize: 21)),
+                onPressed: registre,
+                child: const Text('Registrar', style: TextStyle(fontSize: 21)),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextButton(
                 onPressed: () {
-                  registre();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => Login()),
                   );
                 },
-                child: Text('Tens compte?', style: TextStyle(fontSize: 17)),
+                child: const Text('Tens compte?', style: TextStyle(fontSize: 17)),
               ),
             ],
           ),

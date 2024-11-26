@@ -30,6 +30,13 @@ class _LoginState extends State<Login> {
 
     if (response.statusCode == 200) {
 
+      ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Benvingut!'),
+        duration: Duration(seconds: 3),
+      ),
+    );
+
       final data = jsonDecode(response.body);
       String token = data['token'];
 
@@ -41,6 +48,7 @@ class _LoginState extends State<Login> {
       );
     }
     else {
+      // imprimeixo per pantalla el missatge de l'API
       final error = jsonDecode(response.body)['error'];
       showDialog(
         context: context,
