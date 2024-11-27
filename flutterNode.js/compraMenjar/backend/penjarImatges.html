@@ -4,14 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DBG</title>
+    <style>
+        #previsualitzacio {
+            margin-top: 30px; /* Augmenta l'espai entre el formulari i la imatge */
+        }
+        #previsualitzacio img {
+            max-width: 300px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <h3>Pujar Imatge</h3>
-    <form action="http://localhost:3000/imatges/pujar" method="post" enctype="multipart/form-data">
+    <form id="uploadForm">
         <input type="file" name="imatge" accept="image/*" required>
-        <button type="submit">Pujar</button>
+        <button type="submit">Pujar</button> <!-- Només "Pujar" sense nom de fitxer -->
     </form>
     <div id="previsualitzacio"></div>
+    <div id="missatge"></div>
 
     <script>
         document.querySelector('input[type="file"]').addEventListener('change', function(e) {
@@ -20,11 +31,30 @@
             reader.onload = function(event) {
                 const img = document.createElement('img');
                 img.src = event.target.result;
-                img.style.maxWidth = '300px';
                 document.getElementById('previsualitzacio').innerHTML = '';
                 document.getElementById('previsualitzacio').appendChild(img);
             }
             reader.readAsDataURL(file);
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('http://localhost:3000/imatges/pujar', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('missatge').textContent = data;
+                document.getElementById('uploadForm').reset();
+                document.getElementById('previsualitzacio').innerHTML = '';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('missatge').textContent = 'Error en pujar la imatge';
+            });
         });
     </script>
 </body>
