@@ -48,7 +48,7 @@ class _FormulariState extends State<Formulari> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Formulari de Compra'),
+        title: Text('Dades d\'enviament'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

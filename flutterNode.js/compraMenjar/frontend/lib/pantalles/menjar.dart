@@ -13,7 +13,7 @@ class _MenjarState extends State<Menjar> {
 
   final List<Map<String, dynamic>> plats = [
     {'nom': 'Pizza Margarita', 'preu': 12.99, 'imatge': 'https://imag.bonviveur.com/pizza-margarita.jpg'},
-    {'nom': 'Hamburguesa', 'preu': 9.99, 'imatge': 'https://example.com/hamburguesa.jpg'},
+    {'nom': 'Hamburguesa', 'preu': 9.99, 'imatge': 'https://cdn.pixabay.com/photo/2022/08/31/10/17/burger-7422970_1280.jpg'},
     {'nom': 'Sushi', 'preu': 15.99, 'imatge': 'https://example.com/sushi.jpg'},
     {'nom': 'Amanida', 'preu': 7.99, 'imatge': 'https://example.com/amanida.jpg'},
     {'nom': 'Amanida', 'preu': 7.99, 'imatge': 'https://example.com/amanida.jpg'},
@@ -33,14 +33,15 @@ class _MenjarState extends State<Menjar> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 45),
+          const SizedBox(height: 55),
           const Padding(
             padding: EdgeInsets.all(8),
             child: Text(
-              "Tria el menjar:",
+              "  Tria el menjar:",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
@@ -54,8 +55,8 @@ class _MenjarState extends State<Menjar> {
                   child: ListTile(
                     contentPadding: EdgeInsets.all(10),
                     leading: SizedBox(
-                      width: 80,
-                      height: 80,
+                      width: 150,
+                      height: 150,
                       child: Image.network(
                         plat['imatge'],
                         fit: BoxFit.cover,
