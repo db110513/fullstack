@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'formulari.dart'; // Importa Formulari per la navegació
+import 'formulari.dart';
 
 class Confirmar extends StatelessWidget {
+
   final List<Map<String, dynamic>> carro;
   final double total;
 
   Confirmar({required this.carro, required this.total});
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

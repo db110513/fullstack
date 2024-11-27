@@ -21,6 +21,8 @@ class _MenjarState extends State<Menjar> {
     {'nom': 'Paella', 'preu': 11.16, 'imatge': '${url}paella.jpg'},
     {'nom': 'Pollastre', 'preu': 7.63, 'imatge': '${url}pollastre.jpeg'},
     {'nom': 'Peix', 'preu': 9.76, 'imatge': '${url}peix.jpg'},
+    {'nom': 'Llangonissa', 'preu': 8.29, 'imatge': '${url}llangonissa.jpg'},
+    {'nom': 'Sopa', 'preu': 5.16, 'imatge': '${url}sopa.jpg'},
     {'nom': 'Flam', 'preu': 4.39, 'imatge': '${url}flam.jpg'},
     {'nom': 'Gelat', 'preu': 9.76, 'imatge': '${url}gelat.jpg'},
   ];
