@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'enviat.dart';
 
 class Formulari extends StatefulWidget {
 
@@ -14,12 +15,13 @@ class _FormulariState extends State<Formulari> {
 
   Future<void> enviarComanda() async {
 
-    final url = Uri.parse('http://10.0.2.2:5000/comandes/crea');
+    final url = Uri.parse('http://10.0.2.2:3000/comandes/crea');
 
     final String nomClient = _nomController.text;
     final String direccio = _direccioController.text;
 
     if (nomClient.isNotEmpty && direccio.isNotEmpty) {
+
       final response = await http.post(
         url,
         headers: <String, String>{
@@ -33,8 +35,10 @@ class _FormulariState extends State<Formulari> {
 
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Comanda enviada!')));
-        // Redirigir a una altra pàgina si és necessari
-        // Navigator.pushNamed(context, '/home');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Enviat()),
+        );
       }
       else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error al enviar la comanda')));
@@ -48,12 +52,13 @@ class _FormulariState extends State<Formulari> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dades d\'enviament'),
+        title: Text('Dades d\'enviament:'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            const SizedBox(height: 55),
             TextField(
               controller: _nomController,
               decoration: InputDecoration(
@@ -72,7 +77,7 @@ class _FormulariState extends State<Formulari> {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: enviarComanda,
-              child: Text('Envia la comanda'),
+              child: Text('Envia la comanda', style: TextStyle(fontSize: 19)),
             ),
           ],
         ),
