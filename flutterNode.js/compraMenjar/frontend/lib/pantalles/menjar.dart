@@ -11,14 +11,16 @@ class Menjar extends StatefulWidget {
 
 class _MenjarState extends State<Menjar> {
 
+ static const String url = 'http://10.0.2.2:3000/imatges/';
+
   final List<Map<String, dynamic>> plats = [
-    {'nom': 'Pizza Margarita', 'preu': 12.99, 'imatge': 'https://imag.bonviveur.com/pizza-margarita.jpg'},
-    {'nom': 'Hamburguesa', 'preu': 9.99, 'imatge': 'https://cdn.pixabay.com/photo/2022/08/31/10/17/burger-7422970_1280.jpg'},
-    {'nom': 'Sushi', 'preu': 15.99, 'imatge': 'https://example.com/sushi.jpg'},
-    {'nom': 'Amanida', 'preu': 7.99, 'imatge': 'https://example.com/amanida.jpg'},
-    {'nom': 'Amanida', 'preu': 7.99, 'imatge': 'https://example.com/amanida.jpg'},
-    {'nom': 'Amanida', 'preu': 7.99, 'imatge': 'https://example.com/amanida.jpg'},
-    {'nom': 'Amanida', 'preu': 7.99, 'imatge': 'https://example.com/amanida.jpg'},
+    {'nom': 'Pizza Margarita', 'preu': 12.99, 'imatge': '${url}pizza-margarita.jpg'},
+    {'nom': 'Hamburguesa', 'preu': 9.99, 'imatge': '${url}hamburguesa.jpg'},
+    {'nom': 'Sushi', 'preu': 15.99, 'imatge': '${url}sushi.jpg'},
+    {'nom': 'Amanida', 'preu': 7.99, 'imatge': '${url}amanida.jpg'},
+    {'nom': 'Pasta', 'preu': 11.99, 'imatge': '${url}pasta.jpg'},
+    {'nom': 'Pollastre', 'preu': 13.99, 'imatge': '${url}pollastre.jpeg'},
+    {'nom': 'Peix', 'preu': 16.99, 'imatge': '${url}peix.jpg'},
   ];
 
   List<Map<String, dynamic>> carro = [];
@@ -31,20 +33,20 @@ class _MenjarState extends State<Menjar> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Tria el menjar"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 55),
-          const Padding(
-            padding: EdgeInsets.all(8),
-            child: Text(
-              "  Tria el menjar:",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          ),
           Expanded(
             child: ListView.builder(
               itemCount: plats.length,
