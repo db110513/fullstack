@@ -14,13 +14,15 @@ class _MenjarState extends State<Menjar> {
  static const String url = 'http://10.0.2.2:3000/imatges/';
 
   final List<Map<String, dynamic>> plats = [
-    {'nom': 'Pizza Margarita', 'preu': 12.99, 'imatge': '${url}pizza-margarita.jpg'},
-    {'nom': 'Hamburguesa', 'preu': 9.99, 'imatge': '${url}hamburguesa.jpg'},
-    {'nom': 'Sushi', 'preu': 15.99, 'imatge': '${url}sushi.jpg'},
+    {'nom': 'Pizza Margarita', 'preu': 10.99, 'imatge': '${url}pizza-margarita.jpg'},
+    {'nom': 'Hamburguesa', 'preu': 9.63, 'imatge': '${url}hamburguesa.jpg'},
+    {'nom': 'Sushi', 'preu': 8.53, 'imatge': '${url}sushi.jpg'},
     {'nom': 'Amanida', 'preu': 7.99, 'imatge': '${url}amanida.jpg'},
-    {'nom': 'Pasta', 'preu': 11.99, 'imatge': '${url}pasta.jpg'},
-    {'nom': 'Pollastre', 'preu': 13.99, 'imatge': '${url}pollastre.jpeg'},
-    {'nom': 'Peix', 'preu': 16.99, 'imatge': '${url}peix.jpg'},
+    {'nom': 'Paella', 'preu': 11.16, 'imatge': '${url}paella.jpg'},
+    {'nom': 'Pollastre', 'preu': 7.63, 'imatge': '${url}pollastre.jpeg'},
+    {'nom': 'Peix', 'preu': 9.76, 'imatge': '${url}peix.jpg'},
+    {'nom': 'Flam', 'preu': 4.39, 'imatge': '${url}flam.jpg'},
+    {'nom': 'Gelat', 'preu': 9.76, 'imatge': '${url}gelat.jpg'},
   ];
 
   List<Map<String, dynamic>> carro = [];
@@ -33,13 +35,12 @@ class _MenjarState extends State<Menjar> {
     });
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tria el menjar"),
+        title: const Text("Tria el plat:"),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

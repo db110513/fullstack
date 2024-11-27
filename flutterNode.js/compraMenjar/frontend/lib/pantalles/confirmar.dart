@@ -11,28 +11,31 @@ class Confirmar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Confirmar Compra'),
+        title: Text('Confirmar Compra:'),
       ),
       body: Column(
         children: [
+          const SizedBox(height: 35),
           Expanded(
             child: ListView.builder(
               itemCount: carro.length,
               itemBuilder: (context, index) {
                 final plat = carro[index];
                 return ListTile(
-                  title: Text(plat['nom']),
-                  subtitle: Text('${plat['preu']} €'),
+                  title: Text(plat['nom'], style: TextStyle(fontSize: 19)),
+                  subtitle: Text('${plat['preu']} €', style: TextStyle(fontSize: 15)),
                 );
               },
             ),
           ),
+          const SizedBox(height: 60),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('Total: ${total.toStringAsFixed(2)} €'),
+            padding: const EdgeInsets.all(16),
+            child: Text('Total: ${total.toStringAsFixed(2)} €', style: TextStyle(fontSize: 19)),
           ),
+          const SizedBox(height: 55),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -42,9 +45,10 @@ class Confirmar extends StatelessWidget {
                   ),
                 );
               },
-              child: Text('Confirmar'),
+              child: Text('Confirmar', style: TextStyle(fontSize: 19)),
             ),
           ),
+          const SizedBox(height: 26),
         ],
       ),
     );
