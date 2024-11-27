@@ -12,7 +12,6 @@ const imatgesRoutes = require('./rutes/imatges');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Utilitza express.json() per analitzar les sol·licituds amb càrregues útils JSON
 app.use(express.json());
 app.use(cors());
 

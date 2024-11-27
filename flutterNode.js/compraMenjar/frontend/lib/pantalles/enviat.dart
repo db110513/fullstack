@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'menjar.dart';
+import 'comandes.dart';
 
 class Enviat extends StatelessWidget {
 
@@ -39,10 +40,12 @@ class Enviat extends StatelessWidget {
                 SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).popUntil((route) => route.isFirst);
-                    Navigator.of(context).pop();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Comandes()), // Passa un token buit o el token actual si el tens
+                    );
                   },
-                  child: Text('Tancar sessió', style: TextStyle(fontSize: 19)),
+                  child: Text('Veure estat comanda', style: TextStyle(fontSize: 19)),
                 ),
               ],
             ),

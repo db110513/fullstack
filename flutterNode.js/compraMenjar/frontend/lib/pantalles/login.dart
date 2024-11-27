@@ -29,6 +29,9 @@ class _LoginState extends State<Login> {
     );
 
     if (response.statusCode == 200) {
+      
+      print ("Dades enviades > { nomUsuari: " + _nomUsuariController.text + ""
+          " - contrassenya: " + _contrassenyaController.text + " }");
 
       ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
