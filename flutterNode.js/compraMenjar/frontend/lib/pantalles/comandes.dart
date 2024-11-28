@@ -47,8 +47,9 @@ class _ComandesState extends State<Comandes> {
         itemBuilder: (context, index) {
           final comanda = _comandes[index];
           return ListTile(
-            title: Text(comanda['nomClient']),
-            subtitle: Text(comanda['direccio']),
+            contentPadding: EdgeInsets.fromLTRB(20, 22, 0, 0),
+            title: Text(comanda['nomClient'], style: TextStyle(fontSize: 18),),
+            subtitle: Text(comanda['direccio'], style: TextStyle(fontSize: 20)),
           );
         },
       ),
