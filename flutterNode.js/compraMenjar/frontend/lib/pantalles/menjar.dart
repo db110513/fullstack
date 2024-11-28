@@ -115,7 +115,7 @@ class _MenjarState extends State<Menjar> {
                     ),
                   );
                 },
-          child: Text('Compra (${total.toStringAsFixed(2)} €)'),
+          child: Text('Compra', style: TextStyle(fontSize: 21)),
         ),
       ),
     );
