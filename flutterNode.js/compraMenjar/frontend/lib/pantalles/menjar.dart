@@ -103,7 +103,7 @@ class _MenjarState extends State<Menjar> {
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(10),
         child: ElevatedButton(
           onPressed: carro.isEmpty
               ? null

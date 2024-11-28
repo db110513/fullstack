@@ -35,7 +35,7 @@ class Enviat extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => Menjar(token: '')), // Passa un token buit o el token actual si el tens
                     );
                   },
-                  child: Text('Nova comanda', style: TextStyle(fontSize: 19)),
+                  child: const Text('Nova comanda', style: TextStyle(fontSize: 19)),
                 ),
                 SizedBox(width: 10),
                 ElevatedButton(

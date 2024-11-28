@@ -51,7 +51,7 @@ class _LoginState extends State<Login> {
       );
     }
     else {
-      // imprimeixo per pantalla el missatge de l'API
+      // imprimeixo per pantalla el missatge tornar per l'API
       final error = jsonDecode(response.body)['error'];
       showDialog(
         context: context,

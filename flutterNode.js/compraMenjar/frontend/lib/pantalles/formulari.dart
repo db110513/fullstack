@@ -34,7 +34,6 @@ class _FormulariState extends State<Formulari> {
       );
 
       if (response.statusCode == 201) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Comanda enviada!')));
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Enviat()),
@@ -66,7 +65,7 @@ class _FormulariState extends State<Formulari> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 26),
             TextField(
               controller: _direccioController,
               decoration: InputDecoration(
@@ -74,7 +73,7 @@ class _FormulariState extends State<Formulari> {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 66),
             ElevatedButton(
               onPressed: enviarComanda,
               child: Text('Envia la comanda', style: TextStyle(fontSize: 19)),
