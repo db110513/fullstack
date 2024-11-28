@@ -16,6 +16,9 @@ router.get('/', async (req, res) => {
 
 router.post('/crea', async (req, res) => {
   try {
+
+    console.log('Dades de la comanda: ', req.body);
+
     const { nomClient, direccio } = req.body;
 
     if (!nomClient || !direccio) {

@@ -10,6 +10,8 @@ router.post('/registre', async (req, res) => {
   try {
     const { nomUsuari, contrassenya } = req.body;
 
+    console.log(`Dades del registre rebudes: `, req.body);
+
     if (nomUsuari.length < 3) {
       return res.status(400).json({ error: 'El nom d\'usuari ha de tenir almenys 3 caràcters' });
     }
@@ -40,6 +42,8 @@ router.post('/registre', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { nomUsuari, contrassenya } = req.body;
+
+    console.log(`Dades del login rebudes: `, req.body);
 
     if (!nomUsuari || !contrassenya) {
       return res.status(400).json({ error: 'Tots els camps són obligatoris' });
