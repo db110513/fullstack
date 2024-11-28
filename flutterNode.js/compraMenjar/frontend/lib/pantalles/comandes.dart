@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:math';
 
 class Comandes extends StatefulWidget {
 
@@ -8,7 +9,10 @@ class Comandes extends StatefulWidget {
 }
 
 class _ComandesState extends State<Comandes> {
-  List<dynamic> _comandes = [];
+
+  List<dynamic> comandes = [];
+  bool isLoading = true;
+  final Random _random = Random();
 
   void initState() {
     super.initState();
@@ -16,15 +20,13 @@ class _ComandesState extends State<Comandes> {
   }
 
   Future<void> _obtenirComandes() async {
-    final url = Uri.parse('http://10.0.2.2:3000/comandes');
-
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse('http://10.0.2.2:3000/comandes'));
 
       if (response.statusCode == 200) {
-
         setState(() {
-          _comandes = json.decode(response.body);
+          comandes = json.decode(response.body);
+          isLoading = false;
         });
       }
       else {
@@ -32,27 +34,72 @@ class _ComandesState extends State<Comandes> {
       }
     }
     catch (error) {
-      print('Error al obtenir les comandes: $error');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error al carregar les comandes')));
+      print(error);
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  String _obtenirEstatAleatori() {
+    const List<String> estats = ['cuinant', 'repartint', 'enviat'];
+    return estats[_random.nextInt(estats.length)];
+  }
+
+  Color _obtenirColorEstat(String estat) {
+
+    switch (estat) {
+
+      case 'cuinant':
+        return Colors.red;
+
+      case 'repartint':
+        return Colors.yellow;
+
+      case 'enviat':
+        return Colors.green;
+
+      default:
+        return Colors.grey;
     }
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Estat de les Comandes:'),
+        title: const Text('Comandes'),
       ),
-      body: ListView.builder(
-        itemCount: _comandes.length,
-        itemBuilder: (context, index) {
-          final comanda = _comandes[index];
-          return ListTile(
-            contentPadding: EdgeInsets.fromLTRB(20, 22, 0, 0),
-            title: Text(comanda['nomClient'], style: TextStyle(fontSize: 18),),
-            subtitle: Text(comanda['direccio'], style: TextStyle(fontSize: 20)),
-          );
-        },
-      ),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: comandes.length,
+              itemBuilder: (context, index) {
+                final comanda = comandes[index];
+                String estatAleatori = _obtenirEstatAleatori();
+
+                return Card(
+                  margin: EdgeInsets.all(8),
+                  child: ListTile(
+                    title: Text(
+                      comanda['nomClient'],
+                      style: TextStyle(fontSize: 19),
+                    ),
+                    subtitle: Text(
+                      comanda['direccio'],
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    trailing: Text(
+                      estatAleatori,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: _obtenirColorEstat(estatAleatori),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
     );
   }
 }
