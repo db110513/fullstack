@@ -112,7 +112,7 @@ class _LoginState extends State<Login> {
                     ),
                   );
                 },
-                child: Text('Registra\'t!', style: TextStyle(fontSize: 17)),
+                child: Text('Registra\'t', style: TextStyle(fontSize: 17)),
               ),
             ],
           ),
