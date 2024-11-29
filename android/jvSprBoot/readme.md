@@ -1,0 +1,1 @@
+Projectes fets amb Android fent servir Java pel frontend i Spring Boot pel backend
