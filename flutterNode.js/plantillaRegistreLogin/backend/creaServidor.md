@@ -6,15 +6,16 @@ npm i express mongoose body-parser jsonwebtoken bcrypt nodemon cors multer
 ```
 
 ## Estructura
-
+```
 mkdir models
 
 mkdir rutes
 
 mkdir imatges
+```
 
 ## Arxius
-
+```
 new-item index.js
 
 new-item models/usuari.js
@@ -23,6 +24,9 @@ new-item rutes/usuaris.js
 
 new-item rutesimatges.js
 
+new-item penjarImatges.html
+
+```
 ## 
 
 ## package.json
