@@ -22,7 +22,7 @@ new-item models/usuari.js
 
 new-item rutes/usuaris.js
 
-new-item rutesimatges.js
+new-item rutes/imatges.js
 
 new-item penjarImatges.html
 
