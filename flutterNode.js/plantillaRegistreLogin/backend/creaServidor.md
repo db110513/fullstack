@@ -17,7 +17,7 @@ new-item models/usuari.js
 new-item rutes/usuaris.js
 
 
-package.json
+## package.json
 ```
 "scripts": {
   "dev": "nodemon index"
