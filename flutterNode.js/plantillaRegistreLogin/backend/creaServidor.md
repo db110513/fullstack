@@ -24,7 +24,7 @@ package.json
 }
 ```
 
-models/usuari.js
+## models/usuari.js
 ```
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
@@ -50,7 +50,7 @@ UsuariSchema.methods.verificarContrasenya = async function (contrassenya) {
 module.exports = mongoose.model('Usuari', UsuariSchema);
 ```
 
-rutes/usuaris.js
+## rutes/usuaris.js
 ```
 const express = require('express');
 const bcrypt = require('bcrypt');
