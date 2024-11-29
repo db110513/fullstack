@@ -4,7 +4,8 @@
 npm init -y
 npm i express mongoose body-parser jsonwebtoken bcrypt nodemon cors multer
 ```
-new-item index.js
+
+## Estructura
 
 mkdir models
 
@@ -12,10 +13,17 @@ mkdir rutes
 
 mkdir imatges
 
+## Arxius
+
+new-item index.js
+
 new-item models/usuari.js
 
 new-item rutes/usuaris.js
 
+new-item rutesimatges.js
+
+## 
 
 ## package.json
 ```
