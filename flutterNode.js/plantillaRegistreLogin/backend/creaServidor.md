@@ -5,7 +5,7 @@ npm init -y
 npm i express mongoose body-parser jsonwebtoken bcrypt nodemon cors multer
 ```
 
-## Estructura
+### Estructura
 ```
 mkdir models
 
@@ -14,7 +14,7 @@ mkdir rutes
 mkdir imatges
 ```
 
-## Arxius
+### Arxius
 ```
 new-item index.js
 
@@ -27,7 +27,7 @@ new-item rutes/imatges.js
 new-item penjarImatges.html
 
 ```
-## penjarImatges.html
+### penjarImatges.html
 ```
 <!DOCTYPE html>
 <html lang="ca">
@@ -91,7 +91,7 @@ new-item penjarImatges.html
 </body>
 </html>
 ```
-## rutes/imatges.js
+### rutes/imatges.js
 ```
 const multer = require('multer');
 const path = require('path');
@@ -130,7 +130,7 @@ router.post('/pujar', upload.single('imatge'), (req, res) => {
 module.exports = router;
 ```
 
-## models/usuari.js
+### models/usuari.js
 ```
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
@@ -156,7 +156,7 @@ UsuariSchema.methods.verificarContrasenya = async function (contrassenya) {
 module.exports = mongoose.model('Usuari', UsuariSchema);
 ```
 
-## rutes/usuaris.js
+### rutes/usuaris.js
 ```
 const express = require('express');
 const bcrypt = require('bcrypt');
