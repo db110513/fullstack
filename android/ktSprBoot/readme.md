@@ -1,0 +1,1 @@
+Projectes fets amb Android fent servir Kotlin pel frontend i Spring Boot pel backend
