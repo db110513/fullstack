@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'consultar.dart';
 import 'dart:convert';
 import 'registre.dart';
 
@@ -39,21 +40,21 @@ class _LoginState extends State<Login> {
           " - contrassenya: " + _contrassenyaController.text + " }");
 
       ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Benvingut!'),
-        duration: Duration(seconds: 3),
-      ),
-    );
+        const SnackBar(
+          content: Text('Benvingut!'),
+          duration: Duration(seconds: 3),
+        ),
+      );
 
       final data = jsonDecode(response.body);
       String token = data['token'];
 
-      /*Navigator.pushReplacement(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => Menjar(token: token),
+          builder: (context) => Consultar(),
         ),
-      );*/
+      );
     }
     else {
       // imprimeixo per pantalla el missatge tornar per l'API
@@ -82,7 +83,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(26),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
