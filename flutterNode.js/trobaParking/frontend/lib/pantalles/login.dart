@@ -16,6 +16,12 @@ class _LoginState extends State<Login> {
   final TextEditingController _contrassenyaController = TextEditingController();
 
   Future<void> login() async {
+
+    if (_nomUsuariController.text.isEmpty || _contrassenyaController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('Omple tots els camps')));
+      return;
+    }
+
     final response = await http.post(
       url,
       headers: {

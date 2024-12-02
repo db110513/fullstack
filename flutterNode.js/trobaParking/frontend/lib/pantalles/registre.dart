@@ -1,4 +1,4 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'login.dart';
@@ -15,51 +15,57 @@ class _RegistreState extends State<Registre> {
   final TextEditingController _contrassenyaController = TextEditingController();
 
   Future<void> registre() async {
-  final response = await http.post(
-    url,
-    headers: {'Content-Type': 'application/json'},
-    body: jsonEncode({
-      'nomUsuari': _nomUsuariController.text,
-      'contrassenya': _contrassenyaController.text,
-    }),
-  );
 
-  if (response.statusCode == 201) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Usuari Creat'),
-        duration: Duration(seconds: 3),
-      ),
+    if (_nomUsuariController.text.isEmpty || _contrassenyaController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('Omple tots els camps')));
+      return;
+    }
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'nomUsuari': _nomUsuariController.text,
+        'contrassenya': _contrassenyaController.text,
+      }),
     );
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Login()),
-    );
+
+    if (response.statusCode == 201) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Usuari Creat'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Login()),
+      );
+    }
+    else {
+      // imprimeixo per pantalla el missatge de l'API
+      final error = jsonDecode(response.body)['error'];
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: Text(error),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _nomUsuariController.clear();
+                  _contrassenyaController.clear();
+                },
+                child: const Text('D\'acord'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
-  else {
-    // imprimeixo per pantalla el missatge de l'API
-    final error = jsonDecode(response.body)['error'];
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Error'),
-          content: Text(error),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                _nomUsuariController.clear();
-                _contrassenyaController.clear();
-              },
-              child: const Text('D\'acord'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
 
   Widget build(BuildContext context) {
     return Scaffold(
