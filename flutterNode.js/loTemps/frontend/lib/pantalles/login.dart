@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'registre.dart';
 
 class Login extends StatefulWidget {
-
   _LoginState createState() => _LoginState();
 }
 
@@ -16,69 +15,79 @@ class _LoginState extends State<Login> {
   final TextEditingController _nomUsuariController = TextEditingController();
   final TextEditingController _contrassenyaController = TextEditingController();
 
+  bool carregant = false;
+
   Future<void> login() async {
 
     if (_nomUsuariController.text.isEmpty || _contrassenyaController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('Omple tots els camps')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Omple tots els camps')));
       return;
     }
 
-    final response = await http.post(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        'nomUsuari': _nomUsuariController.text,
-        'contrassenya': _contrassenyaController.text,
-      }),
-    );
+    setState(() {
+      carregant = true;
+    });
 
-    if (response.statusCode == 200) {
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'nomUsuari': _nomUsuariController.text,
+          'contrassenya': _contrassenyaController.text,
+        }),
+      );
 
-      print ("Dades enviades > { nomUsuari: " + _nomUsuariController.text + ""
-          " - contrassenya: " + _contrassenyaController.text + " }");
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        String token = data['token'];
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Benvingut!'), duration: Duration(seconds: 3)),
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Consultar()),
+        );
+      } else {
+        final error = jsonDecode(response.body)['error'];
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text(error),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('D\'acord'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (e) {
+      // Gestionem errors de connexió
+      setState(() {
+        carregant = false;
+      });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Benvingut!'),
-          duration: Duration(seconds: 3),
-        ),
-      );
-
-      final data = jsonDecode(response.body);
-      String token = data['token'];
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Consultar(),
-        ),
+        SnackBar(content: Text('Error en la connexió')),
       );
     }
-    else {
-      // imprimeixo per pantalla el missatge tornar per l'API
-      final error = jsonDecode(response.body)['error'];
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text(error),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('D\'acord'),
-              ),
-            ],
-          );
-        },
-      );
-    }
+
+    // Finalment, aturem el loader independentment de si hi ha èxit o error
+    setState(() {
+      carregant = false;
+    });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -105,8 +114,10 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(height: 24),
               ElevatedButton(
-                onPressed: login,
-                child: Text('Iniciar Sessió', style: TextStyle(fontSize: 21)),
+                onPressed: carregant ? null : login, // Disable si està carregant
+                child: carregant
+                    ? CircularProgressIndicator(color: Colors.white) // Mostrem un indicador de càrrega
+                    : Text('Iniciar Sessió', style: TextStyle(fontSize: 21)),
               ),
               SizedBox(height: 16),
               TextButton(

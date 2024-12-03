@@ -14,13 +14,19 @@ class _RegistreState extends State<Registre> {
   final TextEditingController _nomUsuariController = TextEditingController();
   final TextEditingController _contrassenyaController = TextEditingController();
 
+  bool carregant = false;
+
   Future<void> registre() async {
+  if (_nomUsuariController.text.isEmpty || _contrassenyaController.text.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Omple tots els camps')));
+    return;
+  }
 
-    if (_nomUsuariController.text.isEmpty || _contrassenyaController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('Omple tots els camps')));
-      return;
-    }
+  setState(() {
+    carregant = true;
+  });
 
+  try {
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -31,19 +37,10 @@ class _RegistreState extends State<Registre> {
     );
 
     if (response.statusCode == 201) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Usuari Creat'),
-          duration: Duration(seconds: 3),
-        ),
-      );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Login()),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Usuari Creat'), duration: Duration(seconds: 3)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
     }
     else {
-      // imprimeixo per pantalla el missatge de l'API
       final error = jsonDecode(response.body)['error'];
       showDialog(
         context: context,
@@ -66,50 +63,52 @@ class _RegistreState extends State<Registre> {
       );
     }
   }
+  catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error de connexió')));
+  }
+  finally {
+    setState(() {
+      carregant = false;
+    });
+  }
+}
 
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(26),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _nomUsuariController,
-                decoration: InputDecoration(
-                  labelText: 'Usuari',
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 18),
-                ),
-              ),
-              const SizedBox(height: 18),
-              TextField(
-                controller: _contrassenyaController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Contrassenya',
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 18),
-                ),
-              ),
-              const SizedBox(height: 24),
+
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Center(
+      child: Padding(
+        padding: const EdgeInsets.all(26),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+
+            TextField(controller: _nomUsuariController, decoration: InputDecoration(labelText: 'Usuari')),
+
+            const SizedBox(height: 18),
+            TextField(controller: _contrassenyaController, obscureText: true, decoration: InputDecoration(labelText: 'Contrassenya')),
+
+            const SizedBox(height: 24),
+            if (carregant) CircularProgressIndicator(),
+
+            if (!carregant)
               ElevatedButton(
                 onPressed: registre,
                 child: const Text('Registrar', style: TextStyle(fontSize: 21)),
               ),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Login()),
-                  );
-                },
-                child: const Text('Tens compte?', style: TextStyle(fontSize: 17)),
-              ),
-            ],
-          ),
+
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
+              },
+              child: const Text('Tens compte?', style: TextStyle(fontSize: 17)),
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }
