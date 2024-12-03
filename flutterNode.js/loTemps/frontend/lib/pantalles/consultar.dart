@@ -60,30 +60,41 @@ class _ConsultarState extends State<Consultar> {
     }
   }
 
-  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(56),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
             TextField(
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black
+              ),
               controller: _nomController,
               decoration: const InputDecoration(
                 labelText: 'Nom de la ciutat',
-                labelStyle: TextStyle(color: Colors.black, fontSize: 25),
+                labelStyle: TextStyle(color: Colors.black, fontSize: 2),
               ),
             ),
-            SizedBox(height: 64),
+
+            SizedBox(height: 34),
             ElevatedButton(
               onPressed: obtenirTemps,
-              child: Text('Consultar', style: TextStyle(fontSize: 28)),
+              child: const Text('Consultar', style: TextStyle(fontSize: 21)),
             ),
-            SizedBox(height: 24),
+
+            SizedBox(height: 54),
             if (_temps != null && _temperatura != null) ...[
-              Text('Temps: $_temps', style: TextStyle(fontSize: 18)),
-              Text('Temperatura: $_temperatura°C', style: TextStyle(fontSize: 18)),
+              Text('Temps: $_temps', style: const TextStyle(
+                  fontSize: 20, color: Colors.black)
+              ),
+              Text('Temperatura: $_temperatura', style: const TextStyle(
+                  fontSize: 20, color: Colors.black)
+              ),
             ],
           ],
         ),
