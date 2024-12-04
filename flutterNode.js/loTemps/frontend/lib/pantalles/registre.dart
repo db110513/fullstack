@@ -9,7 +9,6 @@ class Registre extends StatelessWidget {
 
   final ServeisUsuari _serveisUsuari = ServeisUsuari();
 
-
   Widget build(BuildContext context) {
 
     bool carregant = false;
@@ -21,15 +20,27 @@ class Registre extends StatelessWidget {
         return;
       }
 
+      if (_nomUsuariController.text.length < 3) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Nom ha de ser més llarg')));
+        return;
+      }
+
+      if (_contrassenyaController.text.length < 6) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('La contrassenya ha de tindre +6 lletres')));
+        return;
+      }
+
       carregant = true;
 
       try {
+
         final data = await _serveisUsuari.registre(
           _nomUsuariController.text,
           _contrassenyaController.text,
         );
 
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Usuari Creat')));
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Login()),
