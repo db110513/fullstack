@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import '../serveis/serveis_usuari.dart';
 import 'consultar.dart';
-import 'dart:convert';
 import 'registre.dart';
 
 class Login extends StatefulWidget {
@@ -10,11 +9,10 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-  final url = Uri.parse('http://10.0.2.2:3000/usuaris/login');
-
   final TextEditingController _nomUsuariController = TextEditingController();
   final TextEditingController _contrassenyaController = TextEditingController();
 
+  final ServeisUsuari _serveisUsuari = ServeisUsuari();
   bool carregant = false;
 
   Future<void> login() async {
@@ -29,65 +27,33 @@ class _LoginState extends State<Login> {
     });
 
     try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'nomUsuari': _nomUsuariController.text,
-          'contrassenya': _contrassenyaController.text,
-        }),
+      final data = await _serveisUsuari.login(
+        _nomUsuariController.text,
+        _contrassenyaController.text,
       );
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        String token = data['token'];
+      String token = data['token'];
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Benvingut!')));
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Benvingut!'), duration: Duration(seconds: 3)),
-        );
-
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Consultar()),
-        );
-      } else {
-        final error = jsonDecode(response.body)['error'];
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Error'),
-              content: Text(error),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('D\'acord'),
-                ),
-              ],
-            );
-          },
-        );
-      }
-    } catch (e) {
-      // Gestionem errors de connexió
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Consultar()),
+      );
+    }
+    catch (e) {
       setState(() {
         carregant = false;
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error en la connexió')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error en la connexió')));
     }
-
-    // Finalment, aturem el loader independentment de si hi ha èxit o error
-    setState(() {
-      carregant = false;
-    });
+    finally {
+      setState(() {
+        carregant = false;
+      });
+    }
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -114,9 +80,9 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(height: 24),
               ElevatedButton(
-                onPressed: carregant ? null : login, // Disable si està carregant
+                onPressed: carregant ? null : login,
                 child: carregant
-                    ? CircularProgressIndicator(color: Colors.white) // Mostrem un indicador de càrrega
+                    ? CircularProgressIndicator(color: Colors.white)
                     : Text('Iniciar Sessió', style: TextStyle(fontSize: 21)),
               ),
               SizedBox(height: 16),
