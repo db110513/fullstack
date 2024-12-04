@@ -50,8 +50,9 @@ router.post('/login', async (req, res) => {
     }
 
     const usuari = await Usuari.findOne({ nomUsuari });
+    
     if (!usuari) {
-      return res.status(400).json({ error: 'Nom d\'usuari o contrassenya incorrectes' });
+      return res.status(404).json({ message: 'Aquest usuari no existeix' });  // Missatge de l'usuari no existent
     }
 
     const contrasenyaValida = await bcrypt.compare(contrassenya, usuari.contrassenya);
@@ -62,7 +63,8 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ id: usuari._id }, SECRET_KEY, { expiresIn: '1h' });
 
     res.json({ success: true, message: 'Login correcte', token, usuari: nomUsuari });
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error en el login d\'usuari:', error);
     res.status(500).json({ error: 'Error intern del servidor' });
   }
