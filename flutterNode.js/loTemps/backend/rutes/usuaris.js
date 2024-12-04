@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const Usuari = require('../models/usuari');
 
 const router = express.Router();
-const SECRET_KEY = process.env.SECRET_KEY || 'compra-menjar'; 
+const SECRET_KEY = process.env.SECRET_KEY || 'SECRET_KEY'; 
 
 router.post('/registre', async (req, res) => {
   try {
