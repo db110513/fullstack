@@ -39,6 +39,7 @@ router.post('/registre', async (req, res) => {
   }
 });
 
+
 router.post('/login', async (req, res) => {
   try {
     const { nomUsuari, contrassenya } = req.body;
@@ -52,7 +53,8 @@ router.post('/login', async (req, res) => {
     const usuari = await Usuari.findOne({ nomUsuari });
     
     if (!usuari) {
-      return res.status(404).json({ message: 'Aquest usuari no existeix' });  // Missatge de l'usuari no existent
+      console.log('Aquest usuari no existeix');
+      return res.status(404).json({ message: 'Aquest usuari no existeix' });
     }
 
     const contrasenyaValida = await bcrypt.compare(contrassenya, usuari.contrassenya);
@@ -69,5 +71,8 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Error intern del servidor' });
   }
 });
+
+
+
 
 module.exports = router;
