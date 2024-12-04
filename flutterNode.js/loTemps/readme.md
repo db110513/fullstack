@@ -1,4 +1,4 @@
 ### Codi compilat:
 
-https://www.loom.com/share/4754782b31d942d297fce627bfab9762
+https://www.loom.com/share/143b9e12d5cf4f03be538c625eafd0c1
 
