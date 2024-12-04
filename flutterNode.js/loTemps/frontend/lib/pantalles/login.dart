@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../serveis/serveis_usuari.dart';
+import '../serveis/utils.dart';
 import 'consultar.dart';
 import 'registre.dart';
 
@@ -15,50 +16,61 @@ class _LoginState extends State<Login> {
   final ServeisUsuari _serveisUsuari = ServeisUsuari();
   bool carregant = false;
 
-  Future<void> login() async {
+Future<void> login() async {
+  if (_nomUsuariController.text.isEmpty || _contrassenyaController.text.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Omple tots els camps')));
+    return;
+  }
 
-    if (_nomUsuariController.text.isEmpty || _contrassenyaController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Omple tots els camps')));
-      return;
+
+  setState(() {
+    carregant = true;
+  });
+
+  try {
+    final data = await _serveisUsuari.login(
+      _nomUsuariController.text,
+      _contrassenyaController.text,
+      context
+    );
+
+    if (data['error'] != null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['error'])));
+      Utils.neteja(_nomUsuariController, _contrassenyaController);
     }
-
-    setState(() {
-      carregant = true;
-    });
-
-    try {
-      final data = await _serveisUsuari.login(
-        _nomUsuariController.text,
-        _contrassenyaController.text,
-      );
-
-      String token = data['token'];
+    else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Benvingut!')));
+      Utils.neteja(_nomUsuariController, _contrassenyaController);
 
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Consultar()),
       );
     }
-    catch (e) {
-      setState(() {
-        carregant = false;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error en la connexió')));
-    }
-    finally {
-      setState(() {
-        carregant = false;
-      });
-    }
   }
+  catch (e) {
+    setState(() {
+      carregant = false;
+    });
+
+    //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error de connexió')));
+  } finally {
+    setState(() {
+      carregant = false;
+    });
+  }
+}
+
+void _nateja() {
+  _nomUsuariController.clear();
+  _contrassenyaController.clear();
+}
 
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(26),
+          padding: const EdgeInsets.all(36),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

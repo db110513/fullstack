@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../serveis/utils.dart';
 import 'login.dart';
 import '../serveis/serveis_usuari.dart';
 
@@ -20,13 +21,13 @@ class Registre extends StatelessWidget {
         return;
       }
 
-      if (_nomUsuariController.text.length < 3) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Nom ha de ser més llarg')));
+      else if (!(_nomUsuariController.text.length >= 3)) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('El nom ha de tindre mínim 3 lletres')));
         return;
       }
 
-      if (_contrassenyaController.text.length < 6) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('La contrassenya ha de tindre +6 lletres')));
+      else if (!(_contrassenyaController.text.length >= 6)) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('La contrassenya ha de tindre mínim 6 lletres')));
         return;
       }
 
@@ -37,6 +38,7 @@ class Registre extends StatelessWidget {
         final data = await _serveisUsuari.registre(
           _nomUsuariController.text,
           _contrassenyaController.text,
+          context
         );
 
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Usuari Creat')));
@@ -48,7 +50,7 @@ class Registre extends StatelessWidget {
       }
       catch (e) {
         carregant = false;
-
+        Utils.neteja(_nomUsuariController, _contrassenyaController);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error de connexió')));
       }
       finally {
