@@ -269,9 +269,7 @@ module.exports = mongoose.model('Usuari', UsuariSchema);
 
 ## package.json
 ```
-"scripts": {
   , "dev": "nodemon index"
-}
 ```
 
 ##### npm run dev
