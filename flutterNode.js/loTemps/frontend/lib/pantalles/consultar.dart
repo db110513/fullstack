@@ -64,11 +64,17 @@ class _ConsultarState extends State<Consultar> {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(56),
+        padding: const EdgeInsets.all(36),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
 
+             const Text(
+              "Escriu el nom d'una ciutat:",
+              style: TextStyle(fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20),
             TextField(
               style: const TextStyle(
                 fontSize: 20,
