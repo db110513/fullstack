@@ -52,67 +52,61 @@ Future<void> login() async {
     setState(() {
       carregant = false;
     });
-
-    //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error de connexió')));
-  } finally {
+  }
+  finally {
     setState(() {
       carregant = false;
     });
   }
 }
 
-void _nateja() {
-  _nomUsuariController.clear();
-  _contrassenyaController.clear();
-}
-
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(36),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _nomUsuariController,
-                decoration: InputDecoration(
-                  labelText: 'Usuari',
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 18),
-                ),
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Center(
+      child: Padding(
+        padding: const EdgeInsets.all(36),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _nomUsuariController,
+              decoration: InputDecoration(
+                labelText: 'Usuari',
+                labelStyle: TextStyle(color: Colors.black, fontSize: 18),
               ),
-              SizedBox(height: 18),
-              TextField(
-                controller: _contrassenyaController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Contrassenya',
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 18),
-                ),
+            ),
+            const SizedBox(height: 18),
+            TextField(
+              controller: _contrassenyaController,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Contrassenya',
+                labelStyle: TextStyle(color: Colors.black, fontSize: 18),
               ),
-              SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: carregant ? null : login,
-                child: carregant
-                    ? CircularProgressIndicator(color: Colors.white)
-                    : Text('Iniciar Sessió', style: TextStyle(fontSize: 21)),
-              ),
-              SizedBox(height: 16),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Registre(),
-                    ),
-                  );
-                },
-                child: Text('Registra\'t', style: TextStyle(fontSize: 17)),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 54),
+            ElevatedButton(
+              onPressed: carregant ? null : login,
+              child: carregant
+                  ? CircularProgressIndicator(color: Colors.white)
+                  : Text('Iniciar Sessió', style: TextStyle(fontSize: 21)),
+            ),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Registre(),
+                  ),
+                );
+              },
+              child: Text('Registra\'t', style: TextStyle(fontSize: 17)),
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

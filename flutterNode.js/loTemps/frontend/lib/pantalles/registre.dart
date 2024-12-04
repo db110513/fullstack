@@ -10,6 +10,7 @@ class Registre extends StatelessWidget {
 
   final ServeisUsuari _serveisUsuari = ServeisUsuari();
 
+
   Widget build(BuildContext context) {
 
     bool carregant = false;
@@ -43,6 +44,8 @@ class Registre extends StatelessWidget {
 
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Usuari Creat')));
 
+        Utils.neteja(_nomUsuariController, _contrassenyaController);
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Login()),
@@ -72,7 +75,7 @@ class Registre extends StatelessWidget {
                   labelStyle: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
-              SizedBox(height: 18),
+              const SizedBox(height: 18),
               TextField(
                 controller: _contrassenyaController,
                 obscureText: true,
@@ -81,7 +84,7 @@ class Registre extends StatelessWidget {
                   labelStyle: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 54),
               if (carregant) CircularProgressIndicator(),
               if (!carregant)
                 ElevatedButton(
