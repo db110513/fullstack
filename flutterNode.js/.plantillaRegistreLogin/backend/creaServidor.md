@@ -2,7 +2,7 @@
 
 ```
 npm init -y
-npm i express mongoose body-parser jsonwebtoken bcrypt nodemon cors multer
+npm i express mongoose body-parser jsonwebtoken bcrypt nodemon cors multer axios
 ```
 
 ### Estructura
@@ -269,9 +269,7 @@ module.exports = mongoose.model('Usuari', UsuariSchema);
 
 ## package.json
 ```
-"scripts": {
   , "dev": "nodemon index"
-}
 ```
 
 ##### npm run dev

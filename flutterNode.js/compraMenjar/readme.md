@@ -1,4 +1,2 @@
-App que permet comprar menjar a domicili.
 
-Codi compilat:
-
+### Repositori en elaboració... ⏳
