@@ -20,6 +20,16 @@ class _RegistreState extends State<Registre> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text('Omple tots els camps')));
       return;
     }
+
+    else if (!(_nomUsuariController.text.length >= 3)) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('El nom ha de tindre mínim 3 lletres')));
+      return;
+    }
+
+    else if (!(_contrassenyaController.text.length >= 6)) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('La contrassenya ha de tindre mínim 6 lletres')));
+      return;
+    }
     
     final response = await http.post(
       url,
