@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect('mongodb://localhost:27017/BBDD')
+mongoose.connect('mongodb://localhost:27017/busxtu')
 .then(() => console.log('Connexió a la base de dades correcta'))
 .catch(error => console.error('Error en connectar', error));
 
