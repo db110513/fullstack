@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Tiquetsvirtuals extends StatefulWidget {
-  const Tiquetsvirtuals({Key? key}) : super(key: key);
+class Mapa extends StatefulWidget {
+  const Mapa({Key? key}) : super(key: key);
 
-  State<Tiquetsvirtuals> createState() => _TiquetsvirtualsState();
+  State<Mapa> createState() => _MapaState();
 }
 
-class _TiquetsvirtualsState extends State<Tiquetsvirtuals> {
+class _MapaState extends State<Mapa> {
 
   Widget build(BuildContext context) {
 
@@ -14,7 +14,7 @@ class _TiquetsvirtualsState extends State<Tiquetsvirtuals> {
 
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Tiquetsvirtuals', style: TextStyle(fontSize: 40)),
+        title: const Text('Mapa', style: TextStyle(fontSize: 40)),
       ),
 
       body: Container(

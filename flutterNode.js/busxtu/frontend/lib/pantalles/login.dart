@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'registre.dart';
-import 'llista.dart';
+import 'exports.dart';
 
 class Login extends StatefulWidget {
 
