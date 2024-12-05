@@ -28,49 +28,52 @@ class Llista extends StatelessWidget {
         title: Text('Reus Transport', style: TextStyle(fontSize: 28)),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 30),
-          Expanded(
-            child: ListView.builder(
-              itemCount: elements.length,
-              itemBuilder: (context, index) {
-                final element = elements[index];
-                return Column(
-                  children: [
-                    ListTile(
-                      leading: Container(
-                        width: 50,
-                        height: 50,
-                        child: Image.network(
-                          element.imatgeUrl,
-                          fit: BoxFit.cover,
-                          loadingBuilder:
-                              (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
-                                    : null,
-                              ),
-                            );
-                          },
-                          errorBuilder:
-                              (BuildContext context, Object error, StackTrace? stackTrace) {
-                            return Icon(Icons.error);
-                          },
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(50, 0, 40, 0),
+        child: Column(
+          children: [
+            const SizedBox(height: 30),
+            Expanded(
+              child: ListView.builder(
+                itemCount: elements.length,
+                itemBuilder: (context, index) {
+                  final element = elements[index];
+                  return Column(
+                    children: [
+                      ListTile(
+                        leading: Container(
+                          width: 50,
+                          height: 50,
+                          child: Image.network(
+                            element.imatgeUrl,
+                            fit: BoxFit.cover,
+                            loadingBuilder:
+                                (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes != null
+                                      ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                      : null,
+                                ),
+                              );
+                            },
+                            errorBuilder:
+                                (BuildContext context, Object error, StackTrace? stackTrace) {
+                              return Icon(Icons.error);
+                            },
+                          ),
                         ),
+                        title: Text(element.titol, style: TextStyle(fontSize:21)),
                       ),
-                      title: Text(element.titol, style: TextStyle(fontSize:21)),
-                    ),
-                    const SizedBox(height: 25),
-                  ],
-                );
-              },
+                      const SizedBox(height: 25),
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
