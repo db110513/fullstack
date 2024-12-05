@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'exports.dart'; // Assegura't que aquest fitxer existeix i conté les teves pantalles
+import 'exports.dart';
 
 class Llista extends StatelessWidget {
   final List<Item> elements;
@@ -95,7 +95,7 @@ class Llista extends StatelessWidget {
     );
   }
 
-  void _launchURL() async { // Mètode d'instància
+  void _launchURL() async {
     const url = 'https://www.reustransport.cat/category/actualitat/';
     final Uri uri = Uri.parse(url);
 
