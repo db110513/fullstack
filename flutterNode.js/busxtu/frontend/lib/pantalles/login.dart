@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'registre.dart';
+import 'llista.dart';
 
 class Login extends StatefulWidget {
 
@@ -48,12 +49,12 @@ class _LoginState extends State<Login> {
       final data = jsonDecode(response.body);
       String token = data['token'];
 
-      /*Navigator.pushReplacement(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => Menjar(token: token),
+          builder: (context) => Llista(),
         ),
-      );*/
+      );
     }
     else {
       // imprimeixo per pantalla el missatge tornar per l'API
