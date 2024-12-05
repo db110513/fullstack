@@ -81,7 +81,7 @@ class _RegistreState extends State<Registre> {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(36),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
