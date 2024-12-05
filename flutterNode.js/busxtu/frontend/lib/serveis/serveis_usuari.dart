@@ -7,6 +7,7 @@ class ServeisUsuari {
   final String url = 'http://10.0.2.2:3000/usuaris';
 
   Future<Map<String, dynamic>> login(String nomUsuari, String contrassenya, BuildContext context) async {
+
     final response = await http.post(
       Uri.parse('$url/login'),
       headers: {'Content-Type': 'application/json'},
@@ -19,6 +20,7 @@ class ServeisUsuari {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     }
+
     else if (response.statusCode == 404) {
       final responseData = jsonDecode(response.body);
 
@@ -28,6 +30,7 @@ class ServeisUsuari {
 
       throw Exception(responseData['message']);
     }
+
     else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error en iniciar sessió'))
@@ -37,6 +40,7 @@ class ServeisUsuari {
   }
 
   Future<Map<String, dynamic>> registre(String nomUsuari, String contrassenya, BuildContext context) async {
+
     final response = await http.post(
       Uri.parse('$url/registre'),
       headers: {'Content-Type': 'application/json'},
