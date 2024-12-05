@@ -8,54 +8,64 @@ class Element {
 }
 
 class Llista extends StatelessWidget {
-
   final List<Element> elements = [
-    Element("Linies, parades i horaris", "http://10.0.2.2:3000/imatges/llista1"),
-    Element("Estacions preferides", "2222"),
-    Element("Notícies del servei", "3333"),
-    Element("Mapa", "4444"),
-    Element("Targetes i tiquets", "5555"),
-    Element("Punts de venta", "6666"),
-    Element("Tiquets virtuals", "7777"),
-    Element("Informació", "8888"),
-    Element("Segueix-nos!", "9999"),
-    Element("Web", "10"),
+    Element("Linies, parades i horaris", "http://10.0.2.2:3000/imatges/llista1.jpg"),
+    Element("Estacions preferides", "http://10.0.2.2:3000/imatges/llista2.jpg"),
+    Element("Notícies del servei", "http://10.0.2.2:3000/imatges/llista3.jpg"),
+    Element("Mapa", "http://10.0.2.2:3000/imatges/llista4.jpg"),
+    Element("Targetes i tiquets", "http://10.0.2.2:3000/imatges/llista5.jpg"),
+    Element("Punts de venta", "http://10.0.2.2:3000/imatges/llista6.jpg"),
+    Element("Tiquets virtuals", "http://10.0.2.2:3000/imatges/llista7.jpg"),
+    Element("Informació", "http://10.0.2.2:3000/imatges/llista8.jpg"),
+    Element("Segueix-nos!", "http://10.0.2.2:3000/imatges/llista9.jpg"),
+    Element("Web", "http://10.0.2.2:3000/imatges/llista10.jpg"),
   ];
 
+  @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reus Trasnport'),
+        title: Text('Reus Transport', style: TextStyle(fontSize: 28)),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: elements.length,
-        itemBuilder: (context, index) {
-          final element = elements[index];
-          return ListTile(
-            leading: Image.network(
-              element.imatgeUrl,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
-              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
-                        : null,
+      body: Column(
+        children: [
+          const SizedBox(height: 50),
+          Expanded(
+            child: ListView.builder(
+              itemCount: elements.length,
+              itemBuilder: (context, index) {
+                final element = elements[index];
+                return ListTile(
+                  leading: Container(
+                    width: 100,
+                    height: 100,
+                    child: Image.network(
+                      element.imatgeUrl,
+                      fit: BoxFit.cover,
+                      loadingBuilder:
+                          (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                : null,
+                          ),
+                        );
+                      },
+                      errorBuilder:
+                          (BuildContext context, Object error, StackTrace? stackTrace) {
+                        return Icon(Icons.error);
+                      },
+                    ),
                   ),
+                  title: Text(element.titol),
                 );
               },
-              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                return Icon(Icons.error);
-              },
             ),
-            title: Text(element.titol),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
