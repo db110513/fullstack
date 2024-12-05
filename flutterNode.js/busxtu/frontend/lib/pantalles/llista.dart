@@ -30,37 +30,42 @@ class Llista extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const SizedBox(height: 50),
+          const SizedBox(height: 30),
           Expanded(
             child: ListView.builder(
               itemCount: elements.length,
               itemBuilder: (context, index) {
                 final element = elements[index];
-                return ListTile(
-                  leading: Container(
-                    width: 100,
-                    height: 100,
-                    child: Image.network(
-                      element.imatgeUrl,
-                      fit: BoxFit.cover,
-                      loadingBuilder:
-                          (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
-                                : null,
-                          ),
-                        );
-                      },
-                      errorBuilder:
-                          (BuildContext context, Object error, StackTrace? stackTrace) {
-                        return Icon(Icons.error);
-                      },
+                return Column(
+                  children: [
+                    ListTile(
+                      leading: Container(
+                        width: 50,
+                        height: 50,
+                        child: Image.network(
+                          element.imatgeUrl,
+                          fit: BoxFit.cover,
+                          loadingBuilder:
+                              (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                    : null,
+                              ),
+                            );
+                          },
+                          errorBuilder:
+                              (BuildContext context, Object error, StackTrace? stackTrace) {
+                            return Icon(Icons.error);
+                          },
+                        ),
+                      ),
+                      title: Text(element.titol, style: TextStyle(fontSize:21)),
                     ),
-                  ),
-                  title: Text(element.titol),
+                    const SizedBox(height: 25),
+                  ],
                 );
               },
             ),
