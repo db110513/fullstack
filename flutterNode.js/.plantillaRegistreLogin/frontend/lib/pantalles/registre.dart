@@ -101,7 +101,7 @@ class _RegistreState extends State<Registre> {
                   labelStyle: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 44),
               ElevatedButton(
                 onPressed: registre,
                 child: const Text('Registrar', style: TextStyle(fontSize: 21)),

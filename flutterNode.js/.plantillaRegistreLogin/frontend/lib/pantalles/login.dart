@@ -102,7 +102,7 @@ class _LoginState extends State<Login> {
                   labelStyle: TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 44),
               ElevatedButton(
                 onPressed: login,
                 child: Text('Iniciar Sessió', style: TextStyle(fontSize: 21)),
