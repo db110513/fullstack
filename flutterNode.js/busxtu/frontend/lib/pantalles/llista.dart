@@ -1,49 +1,43 @@
 import 'package:flutter/material.dart';
-import 'exports.dart';
-
-class Element {
-  final String titol;
-  final String imatgeUrl;
-  final Function(BuildContext) accio; // Funció per a l'acció associada
-
-  Element(this.titol, this.imatgeUrl, this.accio);
-}
+import 'package:url_launcher/url_launcher.dart';
+import 'exports.dart'; // Assegura't que aquest fitxer existeix i conté les teves pantalles
 
 class Llista extends StatelessWidget {
-  final List<Element> elements = [
-    Element("Linies, parades i horaris", "http://10.0.2.2:3000/imatges/llista1.jpg", (context) {
+  final List<Item> elements;
+
+  Llista({Key? key}) : elements = [
+    Item("Linies, parades i horaris", "http://10.0.2.2:3000/imatges/llista1.jpg", (context) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Linies()));
     }),
-    Element("Estacions preferides", "http://10.0.2.2:3000/imatges/llista2.jpg", (context) {
+    Item("Estacions preferides", "http://10.0.2.2:3000/imatges/llista2.jpg", (context) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Estacions()));
     }),
-    Element("Notícies del servei", "http://10.0.2.2:3000/imatges/llista3.jpg", (context) {
+    Item("Notícies del servei", "http://10.0.2.2:3000/imatges/llista3.jpg", (context) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Noticies()));
     }),
-    Element("Mapa", "http://10.0.2.2:3000/imatges/llista4.jpg", (context) {
+    Item("Mapa", "http://10.0.2.2:3000/imatges/llista4.jpg", (context) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Mapa()));
     }),
-    Element("Targetes i tiquets", "http://10.0.2.2:3000/imatges/llista5.jpg", (context) {
+    Item("Targetes i tiquets", "http://10.0.2.2:3000/imatges/llista5.jpg", (context) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Tiquets()));
     }),
-    Element("Punts de venta", "http://10.0.2.2:3000/imatges/llista6.jpg", (context) {
+    Item("Punts de venda", "http://10.0.2.2:3000/imatges/llista6.jpg", (context) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => PuntVenta()));
     }),
-    Element("Tiquets virtuals", "http://10.0.2.2:3000/imatges/llista7.jpg", (context) {
+    Item("Tiquets virtuals", "http://10.0.2.2:3000/imatges/llista7.jpg", (context) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Tiquetsvirtuals()));
     }),
-    Element("Informació", "http://10.0.2.2:3000/imatges/llista8.jpg", (context) {
+    Item("Informació", "http://10.0.2.2:3000/imatges/llista8.jpg", (context) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Informacio()));
     }),
-    Element("Segueix-nos!", "http://10.0.2.2:3000/imatges/llista9.jpg", (context) {
+    Item("Segueix-nos!", "http://10.0.2.2:3000/imatges/llista9.jpg", (context) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => XXSS()));
     }),
-    Element("Web", "http://10.0.2.2:3000/imatges/llista10.jpg", (context) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Web()));
+    Item("Web", "http://10.0.2.2:3000/imatges/llista10.jpg", (context) {
+      Llista()._launchURL();
     }),
   ];
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -99,5 +93,16 @@ class Llista extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _launchURL() async { // Mètode d'instància
+    const url = 'https://www.reustransport.cat/category/actualitat/';
+    final Uri uri = Uri.parse(url);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'No es pot obrir $url';
+    }
   }
 }

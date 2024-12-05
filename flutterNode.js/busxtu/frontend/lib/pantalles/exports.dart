@@ -11,3 +11,5 @@ export 'login.dart';
 export 'registre.dart';
 export 'mapa.dart';
 export 'xxss.dart';
+export 'item.dart';
+export 'web.dart';
