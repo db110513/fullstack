@@ -1,2 +1,0 @@
-
-### Repositori en elaboració... ⏳
