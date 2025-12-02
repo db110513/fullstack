@@ -36,7 +36,6 @@ class _LoginWidgetState extends State<LoginWidget> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,9 +51,9 @@ class _LoginWidgetState extends State<LoginWidget> {
               style: TextStyle(color: Colors.white),
               decoration: const InputDecoration(
                   labelText: 'Email',
-                  labelStyle: TextStyle(color: Colors.white),
-                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54, width: 1.5)),
-                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white, width: 2)),
+                    labelStyle: TextStyle(color: Colors.white),
+                    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54, width: 1.5)),
+                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white, width: 2)),
                 ),
               keyboardType: TextInputType.emailAddress,
             ),
@@ -83,7 +82,11 @@ class _LoginWidgetState extends State<LoginWidget> {
     );
   }
 
-  void _menu() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Menu()));
+  @override
+  void dispose() {
+    emailController.dispose();
+    passController.dispose();
+    super.dispose();
   }
+
 }

@@ -95,7 +95,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               ),
               keyboardType: TextInputType.text,
             ),
-            const SizedBox(height: 20),
+            AppStyles.sizedBoxHeight20,
             TextFormField(
               controller: emailController,
               style: TextStyle(color: Colors.white),
@@ -109,7 +109,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               ),
               keyboardType: TextInputType.emailAddress,
             ),
-            const SizedBox(height: 20),
+            AppStyles.sizedBoxHeight20,
             TextFormField(
               controller: passController,
               style: TextStyle(color: Colors.white),
@@ -123,7 +123,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               ),
               obscureText: true,
             ),
-            const SizedBox(height: 20),
+            AppStyles.sizedBoxHeight20,
             _loading
                 ? const CircularProgressIndicator()
                 : ElevatedButton(

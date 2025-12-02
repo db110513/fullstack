@@ -48,25 +48,6 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future<void> verifyOTP() async {
-    String otp = otpController.text.trim();
-    if (verificationId.isNotEmpty && otp.isNotEmpty) {
-      PhoneAuthCredential credential =
-          PhoneAuthProvider.credential(verificationId: verificationId, smsCode: otp);
-
-      try {
-        await FirebaseAuth.instance.signInWithCredential(credential);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Sessió iniciada correctament')),
-        );
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error durant la verificació: $e')),
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return LoginWidget();
