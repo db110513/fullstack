@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -77,16 +78,25 @@ class _PerfilState extends State<Perfil> {
     };
 
     try {
-      // obté uid usuari que ja ha fet login
-      String userId;
+      final user = FirebaseAuth.instance.currentUser;
 
-      await FirebaseFirestore.instance.collection('usuaris').doc(userId).set(dades, SetOptions(merge: true));
+      if (user == null) {
+        _showSnackBar('Cap usuari loguejat');
+        return;
+      }
+
+      final String userId = user.uid;
+
+      await FirebaseFirestore.instance
+          .collection('usuaris')
+          .doc(userId)
+          .set(dades, SetOptions(merge: true));
+
       _showSnackBar('Dades guardades amb èxit!');
+    } catch (e) {
+      _showSnackBar('Error en desar les dades: $e');
     }
-    catch (e) {
-      _showSnackBar('Error pujant la imatge.');
-      print('Error pujant la imatge -> $e');
-    }
+
   }
 
   @override

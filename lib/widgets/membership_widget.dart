@@ -159,7 +159,7 @@ class _MembershipWidgetState extends State<MembershipWidget> {
                     fit: BoxFit.cover,
                     loadingBuilder: loading,
                     colorBlendMode: isSelected ? null : BlendMode.darken,
-                    color: isSelected ? null : Colors.black.withOpacity(0.5),
+                    color: isSelected ? null : Colors.black.withValues(),
                   ),
                   Container(
                     alignment: Alignment.bottomCenter,
