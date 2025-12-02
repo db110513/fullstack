@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "529081176643",
+    "project_id": "reus-deportiu-33ab5",
+    "storage_bucket": "reus-deportiu-33ab5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529081176643:android:ffd39a94eb97f755e8faf6",
+        "android_client_info": {
+          "package_name": "db.reus_deportiu.reus_deportiu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQUhJuiym-blC0C5Xv6tXx_iuIiglUwuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
