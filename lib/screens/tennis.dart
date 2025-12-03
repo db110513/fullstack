@@ -13,15 +13,12 @@ class _TennisState extends State<Tennis> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Tenis', style: TextStyle(fontSize: 30)),
+        title: const Text('Tenis', style: AppStyles.appBarText),
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
         child: Column(
-          children: [
-            AppStyles.sizedBoxHeight20,
-
-          ],
+          children: [],
         ),
       ),
     );

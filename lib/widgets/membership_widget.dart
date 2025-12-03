@@ -26,6 +26,13 @@ class _MembershipWidgetState extends State<MembershipWidget> {
     super.initState();
     quotes = [
       {
+        'title': 'Quotes',
+        'desc': "",
+        'image': 'https://img.freepik.com/free-vector/dark-black-background-design-with-stripes_1017-38064.jpg?semt=ais_hybrid&w=740&q=80',
+        'prize': 0
+      },
+
+      {
         'title': 'Familiar',
         'desc': "Per parelles i fills menors de 24\n",
         'image': 'https://reusdeportiu.org/wp-content/uploads/2019/01/quota-familiar-reus-deportiu-300x226.png',

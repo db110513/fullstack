@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import '../styles/app_styles.dart';
 import '../utils/loading.dart';
 
-class ZonaFitness extends StatefulWidget {
+class ZonaFitness extends StatelessWidget {
   const ZonaFitness({Key? key}) : super(key: key);
 
-  @override
-  State<ZonaFitness> createState() => _ZonaFitnessState();
-}
-
-class _ZonaFitnessState extends State<ZonaFitness> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

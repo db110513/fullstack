@@ -13,15 +13,12 @@ class _HockeyState extends State<Hockey> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Hoquei', style: TextStyle(fontSize: 30)),
+        title: const Text('Hoquei', style: AppStyles.appBarText),
       ),   
       body: Container(
         padding: const EdgeInsets.all(10),
         child: Column(
-          children: [
-            AppStyles.sizedBoxHeight20,
-            
-          ],
+          children: [],
         ),
       ),
     );

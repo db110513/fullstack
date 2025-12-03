@@ -19,10 +19,7 @@ class _DanceState extends State<Dance> {
       body: Container(
         padding: const EdgeInsets.all(10),
         child: Column(
-          children: [
-            AppStyles.sizedBoxHeight20,
-
-          ],
+          children: [],
         ),
       ),
     );

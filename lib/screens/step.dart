@@ -19,10 +19,7 @@ class _StepState extends State<Step> {
       body: Container(
         padding: const EdgeInsets.all(10),
         child: Column(
-          children: [
-            AppStyles.sizedBoxHeight20,
-
-          ],
+          children: [],
         ),
       ),
     );

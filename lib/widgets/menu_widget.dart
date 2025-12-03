@@ -107,7 +107,6 @@ class MenuWidget extends StatelessWidget {
           ),
         ),
       ),
-
     );
   }
 }

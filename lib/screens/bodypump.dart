@@ -21,10 +21,7 @@ class _BodypumpState extends State<Bodypump> {
       body: Container(
         padding: const EdgeInsets.all(10),
         child: Column(
-          children: [
-            AppStyles.sizedBoxHeight20,
-            
-          ],
+          children: [],
         ),
       ),
     );

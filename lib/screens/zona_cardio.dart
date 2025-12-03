@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import '../utils/loading.dart';
 import '../styles/app_styles.dart';
 
-class ZonaCardio extends StatefulWidget {
+class ZonaCardio extends StatelessWidget {
   const ZonaCardio({Key? key}) : super(key: key);
-
-  State<ZonaCardio> createState() => _ZonaCardioState();
-}
-
-class _ZonaCardioState extends State<ZonaCardio> {
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +25,6 @@ class _ZonaCardioState extends State<ZonaCardio> {
             ),
             AppStyles.sizedBoxHeight20,
             const Text('Màquines de córrer, bicicletes estàtiques de diferents tipus, màquines el·líptiques...', style: AppStyles.gymText),
-
           ],
         ),
       ),

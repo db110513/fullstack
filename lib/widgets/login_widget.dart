@@ -6,7 +6,7 @@ import '../styles/app_styles.dart';
 import '../screens/menu.dart';
 
 class LoginWidget extends StatefulWidget {
-  const LoginWidget({Key? key}) : super(key: key);
+const LoginWidget({Key? key}) : super(key: key);
 
   @override
   State<LoginWidget> createState() => _LoginWidgetState();

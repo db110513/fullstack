@@ -20,8 +20,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   bool _loading = false;
 
   void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _signUp() async {
@@ -31,7 +30,6 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         email: emailController.text.trim(),
         password: passController.text.trim(),
       );
-
       final user = userCredential.user;
       if (user != null) {
         await _firestore.collection('usuaris').doc(user.uid).set({
@@ -45,11 +43,12 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           MaterialPageRoute(builder: (context) => Menu()),
         );
       }
-    } on FirebaseAuthException catch (e) {
+    }
+    on FirebaseAuthException catch (e) {
       String msg;
       switch (e.code) {
         case 'email-already-in-use':
-          msg = 'Aquest correu ja té un compte. Inicia sessió o recupera la contrasenya.';
+          msg = 'Aquest correu ja té un compte.\nInicia sessió amb ell.';
           break;
         case 'invalid-email':
           msg = 'El correu no és vàlid.';
@@ -62,11 +61,13 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       }
       _showSnackBar(msg);
       debugPrint('FirebaseAuthException: ${e.code} - ${e.message}');
-    } catch (e) {
+    }
+    catch (e) {
       _showSnackBar('Error inesperat al crear el compte.');
       debugPrint('Error: $e');
-    } finally {
-        if (mounted) setState(() => _loading = false);
+    }
+    finally {
+      if (mounted) setState(() => _loading = false);
     }
   }
 
@@ -124,12 +125,10 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               obscureText: true,
             ),
             AppStyles.sizedBoxHeight20,
-            _loading
-                ? const CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: _signUp,
-                    child: const Text('Crear compte'),
-                  ),
+            ElevatedButton(
+              onPressed: _signUp,
+              child: const Text('Crear compte'),
+            ),
           ],
         ),
       ),

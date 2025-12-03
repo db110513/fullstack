@@ -3,13 +3,8 @@ import '../styles/app_styles.dart';
 import '../widgets/cards_dirigides.dart';
 import 'schedule_classes.dart';
 
-class Classes extends StatefulWidget {
+class Classes extends StatelessWidget {
   const Classes({Key? key}) : super(key: key);
-
-  State<Classes> createState() => _ClassesState();
-}
-
-class _ClassesState extends State<Classes> {
 
   Widget build(BuildContext context) {
     return Scaffold(

@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import '../utils/loading.dart';
 import '../styles/app_styles.dart';
 
-class EasyLine extends StatefulWidget {
+class EasyLine extends StatelessWidget {
   const EasyLine({Key? key}) : super(key: key);
-
-  State<EasyLine> createState() => _EasyLineState();
-}
-
-class _EasyLineState extends State<EasyLine> {
 
   Widget build(BuildContext context) {
     return Scaffold(

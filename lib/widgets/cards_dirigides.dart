@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' hide Step;
 import 'package:reus_deportiu/screens/bodypump.dart';
 import 'package:reus_deportiu/screens/cycling.dart';
 import 'package:reus_deportiu/screens/dance.dart';
-import '../screens/act_cardio.dart';
 import '../screens/corpore.dart';
 import '../screens/gac.dart';
 import '../screens/step.dart';

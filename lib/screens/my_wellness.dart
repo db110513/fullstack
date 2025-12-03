@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import '../utils/loading.dart';
 import '../styles/app_styles.dart';
 
-class MyWellness extends StatefulWidget {
+class MyWellness extends StatelessWidget {
   const MyWellness({Key? key}) : super(key: key);
-
-  State<MyWellness> createState() => _MyWellnessState();
-}
-
-class _MyWellnessState extends State<MyWellness> {
 
   Widget build(BuildContext context) {
     return Scaffold(

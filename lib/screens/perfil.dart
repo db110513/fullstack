@@ -5,7 +5,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import '../styles/app_styles.dart';
-import '../styles/input_styles.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({Key? key}) : super(key: key);
@@ -22,8 +21,7 @@ class _PerfilState extends State<Perfil> {
   final TextEditingController _naixementController = TextEditingController();
 
   XFile? _imatge;
-  String? _urlImatgeExistente;
-  DateTime? _dataInscripcio;
+  String? _urlImatgeExistent;
   bool _carregantDades = true;
   final ImagePicker _picker = ImagePicker();
 
@@ -56,9 +54,7 @@ class _PerfilState extends State<Perfil> {
         _localitatController.text = data['localitat'] ?? '';
         _mblController.text = data['mobil'] ?? '';
         _naixementController.text = data['dataNaixement'] ?? '';
-        _urlImatgeExistente = data['imatgeUrl'];
-        final inscripcioTimestamp = data['dataInscripcio'] as Timestamp?;
-        _dataInscripcio = inscripcioTimestamp?.toDate();
+        _urlImatgeExistent = data['imatgeUrl'];
       }
     }
     catch (e) {
@@ -80,7 +76,7 @@ class _PerfilState extends State<Perfil> {
   }
 
   Future<String?> _pujaImatgeAFirebase() async {
-    if (_imatge == null) return _urlImatgeExistente;
+    if (_imatge == null) return _urlImatgeExistent;
 
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
@@ -98,7 +94,8 @@ class _PerfilState extends State<Perfil> {
       final snapshot = await uploadTask.whenComplete(() {});
       final urlDescarga = await snapshot.ref.getDownloadURL();
       return urlDescarga;
-    } catch (e) {
+    }
+    catch (e) {
       print('Error pujant la imatge: $e');
       _showSnackBar('Error pujant la imatge.');
       return null;
@@ -115,7 +112,6 @@ class _PerfilState extends State<Perfil> {
       'localitat': _localitatController.text,
       'mobil': _mblController.text,
       'dataNaixement': _naixementController.text,
-      'dataInscripcio': _dataInscripcio ?? DateTime.now(),
       'imatgeUrl': urlImatge,
       'actualitzat': DateTime.now(),
     };
@@ -146,7 +142,7 @@ class _PerfilState extends State<Perfil> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Perfil'),
+        title: const Text('Perfil', style: AppStyles.appBarText),
       ),
       body: _carregantDades
           ? const Center(child: CircularProgressIndicator())
@@ -164,21 +160,22 @@ class _PerfilState extends State<Perfil> {
                         radius: 60,
                         backgroundImage: _imatge != null
                             ? FileImage(File(_imatge!.path))
-                            : _urlImatgeExistente != null
-                                ? NetworkImage(_urlImatgeExistente!)
+                            : _urlImatgeExistent != null
+                                ? NetworkImage(_urlImatgeExistent!)
                                 : null,
-                        child: _imatge == null && _urlImatgeExistente == null
+                        child: _imatge == null && _urlImatgeExistent == null
                             ? const Icon(Icons.person, size: 60, color: Colors.grey)
                             : null,
                       ),
                     ),
-                    AppStyles.sizedBoxHeight20,
+                    AppStyles.sizedBoxHeight60,
                     TextFormField(
                       textCapitalization: TextCapitalization.sentences,
                       controller: _nomController,
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
                         labelText: 'Nom',
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.person, color: Colors.white70),
                         enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54, width: 1.5)),
@@ -193,13 +190,13 @@ class _PerfilState extends State<Perfil> {
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
                         labelText: 'Localitat',
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.location_city, color: Colors.white70),
                         enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54, width: 1.5)),
                         focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white, width: 2)),
                       ),
-                      validator: (value) =>
-                          value == null || value.isEmpty ? 'Introdueix una localitat' : null,
+                      validator: (value) => value == null || value.isEmpty ? 'Introdueix una localitat' : null,
                     ),
                     AppStyles.sizedBoxHeight20,
                     TextFormField(
@@ -208,12 +205,21 @@ class _PerfilState extends State<Perfil> {
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
                         labelText: 'Mòbil',
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.phone, color: Colors.white70),
                         enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54, width: 1.5)),
                         focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white, width: 2)),
                       ),
-                      validator: (value) => value == null || value.isEmpty ? 'Introdueix mòbil' : null,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Introdueix el mòbil';
+                        }
+                        if (value.length != 9) {
+                          return 'El mòbil ha de tenir 9 dígits';
+                        }
+                        return null;
+                      },
                     ),
                     AppStyles.sizedBoxHeight20,
                     TextFormField(
@@ -221,22 +227,24 @@ class _PerfilState extends State<Perfil> {
                       keyboardType: TextInputType.datetime,
                       style: const TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
-                        labelText: 'Data de naixement (DD/MM/AAAA)',
+                        labelText: 'Data de naixement (DD/MM/AA)',
+                        labelStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.cake, color: Colors.white70),
                         enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54, width: 1.5)),
                         focusedBorder: OutlineInputBorder(borderSide:
                         BorderSide(color: Colors.white, width: 2)),
                       ),
+                      validator: (value) => value == null || value.isEmpty ? 'Introdueix la data de naixement' : null,
                     ),
                     AppStyles.sizedBoxHeight40,
-                    ElevatedButton.icon(
+                    ElevatedButton(
                       onPressed: _desaDades,
-                      icon: const Icon(Icons.save),
-                      label: const Text('Desar Perfil'),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        minimumSize: const Size(80, 44),
+                        maximumSize: const Size(200, 44),
                       ),
+                      child: const Text('Desar'),
                     ),
                   ],
                 ),
